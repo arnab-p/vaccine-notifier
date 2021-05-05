@@ -3,7 +3,7 @@ const mailgun = require("mailgun-js");
 const axios = require("axios");
 require("dotenv").config();
 
-const task = cron.schedule("*/5 * * * *", async () => {
+const task = cron.schedule("* * * * *", async () => {
   const district_id = 725; // district_id for Kolkata
 
   const date = new Date();
@@ -29,8 +29,10 @@ const task = cron.schedule("*/5 * * * *", async () => {
   console.log(JSON.stringify(filtered_centers));
   if (filtered_centers.length > 0) {
     // send mail through mailgunconst mailgun = require("mailgun-js");
-    const DOMAIN = process.env.MAILGUN_DOMAIN;
-    const mg = mailgun({ apiKey: process.env.MAILGUN_KEY, domain: DOMAIN });
+    console.log("Sending Email...");
+    const domain = process.env.MAILGUN_DOMAIN;
+    const apiKey = process.env.MAILGUN_KEY;
+    const mg = mailgun({ apiKey, domain });
     const data = {
       from: `Mailgun Sandbox <${process.env.MAILGUN_FROM}>`,
       to: process.env.MAILGUN_TO,
