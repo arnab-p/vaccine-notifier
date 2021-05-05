@@ -4,7 +4,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 const task = cron.schedule("*/5 * * * *", async () => {
-  const district_id = 725;
+  const district_id = 725; // district_id for Kolkata
 
   const date = new Date();
   console.log("Checking......", date);
