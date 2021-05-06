@@ -3,7 +3,7 @@ const mailgun = require("mailgun-js");
 const axios = require("axios");
 require("dotenv").config();
 
-const task = cron.schedule("* * * * *", async () => {
+const task = cron.schedule("*/2 * * * *", async () => {
   const district_id = 725; // district_id for Kolkata
 
   const date = new Date();
@@ -28,6 +28,10 @@ const task = cron.schedule("* * * * *", async () => {
 
   console.log(JSON.stringify(filtered_centers));
   if (filtered_centers.length > 0) {
+    console.log("Hitting webhook...");
+    axios.post(process.env.SLACK_WEBHOOK, {
+      text: `${filtered_centers.length} centers available in Kolkata.`,
+    });
     // send mail through mailgunconst mailgun = require("mailgun-js");
     console.log("Sending Email...");
     const domain = process.env.MAILGUN_DOMAIN;
